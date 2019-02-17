@@ -17,6 +17,6 @@ app.use(async (ctx, next) => {
 app.use(bodyParser());
 
 // add controllers:
-app.use(controller());
+app.use(controller.con());
 
 app.listen(3000);

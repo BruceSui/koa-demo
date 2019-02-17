@@ -1,5 +1,7 @@
 const fs = require('fs');
 const Router = require('koa-router');
+const Koa = require('koa-bodyparser');
+
 // add url-route in /controllers:
 
 function addMapping(router, mapping) {
@@ -36,10 +38,11 @@ function addControllers(router, dir) {
     });
 }
 
-module.exports = function (dir) {
+module.exports.con = function (dir) {
     let
         controllers_dir = dir || 'src/controller',
         router = new Router();
     addControllers(router, controllers_dir);
+    console.log(new Koa());
     return router.routes();
 };

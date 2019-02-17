@@ -1,6 +1,8 @@
 var fn_index = async (ctx, next) => {
     console.log('lalala');
-    
+    console.log(__dirname);
+    console.log(__filename);
+
     ctx.response.body = `<h1>Index</h1>
         <form action="/signin" method="post">
             <p>Name: <input name="name" value="koa"></p>
