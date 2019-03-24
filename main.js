@@ -53,7 +53,41 @@
 // const middlewares = compose1([one1, two1, three1]);
 // middlewares();
 
-var fruits = ["Banana", "Orange", "Apple", "Mango"];
-console.log(fruits.shift());
-console.log(fruits);
+// var fruits = ["Banana", "Orange", "Apple", "Mango"];
+// console.log(fruits.shift());
+// console.log(fruits);
 
+const Koa = require('koa');
+const send = require('koa-send');
+const http = require('http');
+
+
+const app = new Koa();
+
+var options={
+	host:'39.106.198.77',
+	path:'/car/api/car-oem/getAllCarOEms',
+	port:8100,
+	method:'GET',
+	headers:{
+		'Content-Type':'application/jsona',
+	}
+}
+var callback = function(response) {
+    let body = '';
+    response.on('data', function(data) {
+        body += data;
+    });
+    response.on('end', function() {
+        console.log(body);
+    })
+}
+app.use(async (ctx, next) => {
+    await next();
+    let request = http.request(options, callback);
+    request.end();
+    ctx.response.type = 'text/html';
+    ctx.response.body = '<h1>Hello, koa2!</h1>';
+})
+
+app.listen(3000);
