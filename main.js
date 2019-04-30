@@ -58,15 +58,44 @@
 // console.log(fruits);
 
 const Koa = require('koa');
-const send = require('koa-send');
 const http = require('http');
-
+const jwt = require('koa-jwt');
 
 const app = new Koa();
 
+// Custom 401 handling if you don't want to expose koa-jwt errors to users
+// app.use(function(ctx, next){
+//     return next().catch((err) => {
+//         if (401 == err.status) {
+//             ctx.status = 401;
+//             ctx.body = 'Protected resource, use Authorization header to get access\n';
+//         } else {
+//             throw err;
+//         }
+//     });
+// });
+// Unprotected middleware
+// app.use(function(ctx, next){
+//     if (ctx.url.match(/^\/public/)) {
+//       ctx.body = 'unprotected\n';
+//     } else {
+//       return next();
+//     }
+// });
+
+// Middleware below this line is only reached if JWT token is valid
+// app.use(jwt({ secret: 'shared-secret' }));
+
+// // Protected middleware
+// app.use(function(ctx){
+//   if (ctx.url.match(/^\/api/)) {
+//     ctx.body = 'protected\n';
+//   }
+// });
+
 var options={
 	host:'39.106.198.77',
-	path:'/car/api/car-oem/getAllCarOEms',
+	path:'/boss/api/getDemand?page=0&size=20',
 	port:8100,
 	method:'GET',
 	headers:{
@@ -91,3 +120,5 @@ app.use(async (ctx, next) => {
 })
 
 app.listen(3000);
+
+
